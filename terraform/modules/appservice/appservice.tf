@@ -1,3 +1,5 @@
+resource random_pet "test"{}
+
 resource "azurerm_service_plan" "test" {
   name                = "${var.application_type}-${var.resource_type}"
   location            = "${var.location}"
@@ -7,7 +9,7 @@ resource "azurerm_service_plan" "test" {
 }
 
 resource "azurerm_linux_web_app" "test" {
-  name                = "${var.application_type}-${var.resource_type}"
+  name                = "${var.application_type}-${var.resource_type}-${random_pet.test.id}"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group}"
   service_plan_id     = azurerm_service_plan.test.id
@@ -19,3 +21,9 @@ resource "azurerm_linux_web_app" "test" {
     always_on = false
   }
 }
+
+# sku size
+# "F1",
+# "P1V2",
+# "P1V3",
+# "B1"
