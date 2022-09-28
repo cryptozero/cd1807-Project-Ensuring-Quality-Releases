@@ -15,6 +15,9 @@ def login(user: str, password: str) -> webdriver:
     # driver = webdriver.Chrome(options=options)
     driver = webdriver.Chrome()
     print('Browser started successfully. Navigating to the demo page to login.')
+
+    driver.implicitly_wait(0.5)
+
     driver.get('https://www.saucedemo.com/')
 
     print(f"Login with user: {user}")
@@ -43,7 +46,6 @@ def add_items(driver: webdriver) -> int:
     for i in items:
         print(f"Adding to cart item: {i.get_property('id')}")
         i.click()
-        sleep(1)
 
     cart_items = driver.find_element(
         by=By.CSS_SELECTOR, value=".shopping_cart_link > span").text
@@ -83,3 +85,5 @@ added_items = add_items(driver)
 assert nitems == added_items
 go_cart(driver)
 remove_items(driver)
+
+driver-quit()
