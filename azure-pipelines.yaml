@@ -33,7 +33,7 @@ stages:
     - task: TerraformInstaller@0
       displayName: install terraform
       inputs:
-        terraformVersion: 1.2.9
+        terraformVersion: 1.3.1
     
     # Run Terraform Init on the pipeline agent 
     # ToDo: Replace the resource group name, storage account name, and container name below
@@ -41,13 +41,13 @@ stages:
       displayName: 'Downloading tfvars file'
       name: terraformtfvars
       inputs:
-        secureFile: terraform.tfvars
+        secureFile: "terraform.tfvars"
 
     - task: DownloadSecureFile@1
       displayName: Downloading backend.config file'
       name: backendconfig
       inputs:
-        secureFile: backend.config
+        secureFile: "backend.config"
 
     - task: TerraformCLI@0
       displayName: 'terraform init'
