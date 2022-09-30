@@ -6,32 +6,32 @@ provider "azurerm" {
   features {}
 }
 terraform {
-  # backend "azurerm" {
-  #   storage_account_name = ""
-  #   container_name       = ""
-  #   key                  = ""
-  #   access_key           = ""
-  # }
+  backend "azurerm" {
+    storage_account_name = var.backend_storage_account_name
+    container_name       = var.backend_container_name
+    key                  = var.backend_key
+    access_key           = var.backend_access_key
+  }
 }
 module "resource_group" {
-  source               = "../../modules/resource_group"
+  source         = "../../modules/resource_group"
   resource_group = var.resource_group
   location       = var.location
-  udacity_lab = var.udacity_lab
+  udacity_lab    = var.udacity_lab
 }
 module "network" {
-  source               = "../../modules/network"
-  address_space        = var.address_space
-  location             = var.location
-  virtual_network_name = var.virtual_network_name
-  application_type     = var.application_type
-  resource_type        = "NET"
-  resource_group       = module.resource_group.resource_group_name
-  address_prefixes_test  = var.address_prefixes_test
+  source                = "../../modules/network"
+  address_space         = var.address_space
+  location              = var.location
+  virtual_network_name  = var.virtual_network_name
+  application_type      = var.application_type
+  resource_type         = "NET"
+  resource_group        = module.resource_group.resource_group_name
+  address_prefixes_test = var.address_prefixes_test
 }
 
 module "nsg-test" {
-  source           = "../../modules/networksecuritygroup"
+  source              = "../../modules/networksecuritygroup"
   location            = var.location
   application_type    = var.application_type
   resource_type       = "NSG"
@@ -54,12 +54,13 @@ module "publicip" {
   resource_group   = module.resource_group.resource_group_name
 }
 module "vm" {
-  source            = "./modules/vm"
-  name              = var.vm_name
-  location          = var.location
-  resource_group    = var.resource_group
-  subnet_id         = module.network.subnet_id_test
+  source               = "./modules/vm"
+  name                 = var.vm_name
+  location             = var.location
+  resource_group       = var.resource_group
+  subnet_id            = module.network.subnet_id_test
   public_ip_address_id = module.publicip.public_ip_address_id
-  size              = var.vm_size
-  admin_username    = var.admin_username
+  size                 = var.vm_size
+  admin_username       = var.admin_username
+  ssh_key_public       = var.ssh_key_public
 }
