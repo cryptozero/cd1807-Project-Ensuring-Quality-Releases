@@ -90,7 +90,7 @@ stages:
       displayName: 'terraform apply'
       inputs:
         command: apply
-        commandOptions: "-var-file=terraformtfvars.secureFilePath"
+        commandOptions: "-var-file=$(terraformtfvars.secureFilePath)"
         workingDirectory: '$(terraform-working-directory)'
 
     # ToDo: Change the workingDirectory path, as applicable to you
