@@ -35,11 +35,5 @@ variable "udacity_lab" {
   default = true
 }
 
-# Backend storage
-variable "backend_storage_account_name" {}
-variable "backend_container_name" {}
-variable "backend_key" {}
-variable "backend_access_key" {}
-
 # SSH key
-variable ssh_key_public {}
+variable "ssh_key_public" {}

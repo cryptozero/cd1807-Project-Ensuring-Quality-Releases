@@ -24,3 +24,5 @@ override.tf.json
 *_override.tf.json
 automatedtesting/jmeter/jmeter.log
 automatedtesting/jmeter/results/result-endurance.csv
+terraform/environments/test/.terraform.lock.hcl
+terraform/environments/test/backend.config

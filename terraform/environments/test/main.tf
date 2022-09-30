@@ -6,12 +6,7 @@ provider "azurerm" {
   features {}
 }
 terraform {
-  backend "azurerm" {
-    storage_account_name = var.backend_storage_account_name
-    container_name       = var.backend_container_name
-    key                  = var.backend_key
-    access_key           = var.backend_access_key
-  }
+  backend "azurerm" {}
 }
 module "resource_group" {
   source         = "../../modules/resource_group"
@@ -54,7 +49,7 @@ module "publicip" {
   resource_group   = module.resource_group.resource_group_name
 }
 module "vm" {
-  source               = "./modules/vm"
+  source               = "../../modules/vm"
   name                 = var.vm_name
   location             = var.location
   resource_group       = var.resource_group
