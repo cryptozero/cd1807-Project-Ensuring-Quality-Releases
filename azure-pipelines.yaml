@@ -37,6 +37,16 @@ stages:
     
     # Run Terraform Init on the pipeline agent 
     # ToDo: Replace the resource group name, storage account name, and container name below
+    - task: DownloadSecureFile@1
+      displayName: 'Downloading tfvars file'
+      inputs:
+        secureFile: terraform.tfvars
+
+    - task: DownloadSecureFile@1
+      displayName: Downloading backend.config file'
+      inputs:
+        secureFile: backend.config
+
     - task: TerraformTaskV3@3
       displayName: 'Terrafom init'
       inputs:
@@ -44,10 +54,6 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         backendServiceArm: '$(azureServiceConnectionId)'
-        backendAzureRmResourceGroupName: 'Azuredevops'
-        backendAzureRmStorageAccountName: 'tfstate281845088'
-        backendAzureRmContainerName: 'tfstate'
-        backendAzureRmKey: 'test.terraform.tfstate'
 
     # ToDo: Run Terraform Validate    
     - task: TerraformTaskV3@3
