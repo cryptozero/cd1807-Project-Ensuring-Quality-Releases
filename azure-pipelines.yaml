@@ -35,7 +35,8 @@ stages:
           #! /bin/bash
 
           sudo apt-get upgrade -y
-          sudo apt-get install unzip -y
+          sudo apt-get install unzip zip -y
+  
     #--------------------------------------------#  
     # Use Terraform to create the Infrastructure      
     # Install Terraform on the pipeline agent 
