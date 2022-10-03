@@ -122,7 +122,7 @@ stages:
       displayName: Install Newman
       continueOnError: true
       inputs:
-        script: "npm install newman"          # ToDo: Write your commands to install newman
+        script: "npm -g install newman"          # ToDo: Write your commands to install newman
         workingDirectory: $(System.DefaultWorkingDirectory)
     # Postman Data Validation Test Suite    
     # ToDo: Verify the working directory and the newman scripts
