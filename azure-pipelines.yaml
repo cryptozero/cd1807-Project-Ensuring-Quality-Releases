@@ -139,7 +139,7 @@ stages:
       displayName: Run Regression Tests
       continueOnError: true
       inputs:
-        script: newman run Testsuite.Regression.postman_collection.json --environment test.postman_environment.json          # ToDo: Write your commands
+        script: newman run Testsuite.Regression.postman_collection.json --environment test.postman_environment.json --reporters cli,junit --reporter-junit-export TEST-regression.xml'          # ToDo: Write your commands
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     # Postman - Publish Results 
     # ToDo: Complete the task as explained here: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=trx%2Cyaml#yaml-snippet
