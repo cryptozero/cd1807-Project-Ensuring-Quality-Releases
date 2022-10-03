@@ -227,7 +227,7 @@ stages:
             inputs:
               azureSubscription: $(azureServiceConnectionId)     # ToDo
               appName: $(appName)               # ToDo
-              appType: webApp
+              appType: webAppLinux
               deploymentMethod: zipDeploy
               package:  $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact. 
           #--------------------------------------------#    
