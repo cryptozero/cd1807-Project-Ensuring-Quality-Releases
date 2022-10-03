@@ -76,6 +76,15 @@ stages:
         command: validate
         workingDirectory: '$(terraform-working-directory)'
 
+    # ToDo: Run Terraform plan    
+    - task: TerraformCLI@0
+      displayName: 'terraform plan'
+      publishPlanResults: test-plan
+      inputs:
+        command: plan
+        workingDirectory: '$(terraform-working-directory)'
+      
+
     # OPTIONAL - This step is needed only if your Terraform VM uses an SSH key pair for login and you want your pipeline agent to connect to it. 
     # Generate an SSH key pair in your local/AZ Cloud shell. Use the public key in the Terraform VM module. 
     # Install public key and private key file to the pipeline agent, using the task below. 
@@ -131,7 +140,7 @@ stages:
       displayName: Run Data Validation Tests
       continueOnError: true
       inputs:
-        script: newman run Testsuite.Validation.postman_collection.json --environment test.postman_environment.json         # ToDo: Write your commands
+        script: newman run Testsuite.Validation.postman_collection.json --environment test.postman_environment.json --reporters cli,junit --reporter-junit-export TEST-validation.xml       # ToDo: Write your commands
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     # Postman Regression Test Suite    
     # ToDo: Update the command and verify the working directory
@@ -139,7 +148,7 @@ stages:
       displayName: Run Regression Tests
       continueOnError: true
       inputs:
-        script: newman run Testsuite.Regression.postman_collection.json --environment test.postman_environment.json --reporters cli,junit --reporter-junit-export TEST-regression.xml'          # ToDo: Write your commands
+        script: newman run Testsuite.Regression.postman_collection.json --environment test.postman_environment.json --reporters cli,junit --reporter-junit-export TEST-regression.xml          # ToDo: Write your commands
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
     # Postman - Publish Results 
     # ToDo: Complete the task as explained here: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/test/publish-test-results?view=azure-devops&tabs=trx%2Cyaml#yaml-snippet
