@@ -19,6 +19,7 @@ variables:
   # Environment name
   environmentName: 'test'
   terraform-working-directory: '$(projectRoot)/terraform/environments/$(environmentName)'
+  group: test
 
 stages:
 #--------------------------------------------#  
@@ -82,7 +83,7 @@ stages:
       inputs:
         command: plan
         workingDirectory: '$(terraform-working-directory)'
-        publishPlanResults: test-plan
+        publishPlanResults: 'test'
         commandOptions: "-var-file=$(terraformtfvars.secureFilePath)"
       
     # OPTIONAL - This step is needed only if your Terraform VM uses an SSH key pair for login and you want your pipeline agent to connect to it. 
@@ -224,7 +225,7 @@ stages:
             displayName: 'Deploy Azure Web App'
             inputs:
               azureSubscription: $(azureServiceConnectionId)     # ToDo
-              appName: fakerestapi               # ToDo
+              appName: $(appName)               # ToDo
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact. 
           #--------------------------------------------#    
