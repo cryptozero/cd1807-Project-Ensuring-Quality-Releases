@@ -79,10 +79,10 @@ stages:
     # ToDo: Run Terraform plan    
     - task: TerraformCLI@0
       displayName: 'terraform plan'
-      publishPlanResults: test-plan
       inputs:
         command: plan
         workingDirectory: '$(terraform-working-directory)'
+        publishPlanResults: test-plan
       
 
     # OPTIONAL - This step is needed only if your Terraform VM uses an SSH key pair for login and you want your pipeline agent to connect to it. 
