@@ -19,7 +19,6 @@ variables:
   # Environment name
   environmentName: 'test'
   terraform-working-directory: '$(projectRoot)/terraform/environments/$(environmentName)'
-  group: test
 
 stages:
 #--------------------------------------------#  
@@ -211,6 +210,8 @@ stages:
 # DEPLOYMENT STAGE
 #--------------------------------------------#    
 - stage: Deploy
+  variables:
+    - group: test
   jobs:
   #--------------------------------------------#  
   # Deploy FakeRestAPI Web App
