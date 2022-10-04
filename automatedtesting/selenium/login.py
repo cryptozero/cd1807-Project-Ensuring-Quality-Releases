@@ -10,10 +10,10 @@ from selenium.webdriver.common.by import By
 def login(user: str, password: str) -> webdriver:
     print('Starting the browser...')
     # --uncomment when running in Azure DevOps.
-    # options = ChromeOptions()
-    # options.add_argument("--headless")
-    # driver = webdriver.Chrome(options=options)
-    driver = webdriver.Chrome()
+    options = ChromeOptions()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    # driver = webdriver.Chrome()
     print('Browser started successfully. Navigating to the demo page to login.')
 
     driver.implicitly_wait(0.5)
