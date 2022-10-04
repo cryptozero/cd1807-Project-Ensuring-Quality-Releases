@@ -175,9 +175,6 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-uitests.zip   # Same as the archiveFile artifact above. 
       displayName: 'Upload Package'
       artifact: drop-uitests
-    - publish: $(Build.ArtifactStagingDirectory)/login.py   # Same as the archiveFile artifact above. 
-      displayName: 'Upload Package'
-      artifact: drop-uitests/login.py
 
     #--------------------------------------------#    
     # FakeRestAPI - Archive
@@ -270,6 +267,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
+                unzip drop-uitests/$(Build.BuildId)-uitests.zip'
                 cp drop-uitests/login.py ./
                 mkdir -p ./log/selenium
                 python3 ./login.py 2>&1 | tee -a ./log/selenium/selenium-test.log           
