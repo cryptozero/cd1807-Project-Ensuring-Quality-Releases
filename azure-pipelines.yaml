@@ -229,15 +229,65 @@ stages:
               appName: $(appName)               # ToDo
               appType: webAppLinux
               deploymentMethod: zipDeploy
-              package:  $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact. 
+              package:  $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact.
 
+  - deployment: VMDeploy
+    displayName: Selenium Tests
+    environment:
+      name: test        # ToDo: Change/provide a name
+      resourceType: VirtualMachine
+      tags: selenium
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop-ui-tests     # ToDo: Change/provide a name    
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |           
+                # ToDo: Install Selenium, Chromium-browser & Chromedriver, if not already in the custom VM image. 
+                ! /bin/bash
+                
+                sudo apt-get upgrade -y
+                sudo apt-get install python3-pip -y
+                sudo apt-get install unzip -y
+                sudo apt-get install -y chromium-browser
+                sudo apt-get install -y chromium-chromedriver
+                pip3 install selenium
+                
+                #  ToDo: Add chromedriver executable to path
+                export PATH=$PATH:/usr/lib/chromium-browser/   
+                
+                # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
+                # ToDo: Direct the output of the Selenium Test Suite to a log file
+          - task: Bash@3
+            displayName: 'Run UI test'
+            inputs:
+              targetType: 'inline'
+              script: |
+                mkdir -p ./log/selenium             
+                python3 ./automatedtesting/selenium/login.py 2>&1 | tee -a ./log/selenium/selenium-test.log           
+                ls -al
+          - task: PublishPipelineArtifact@1
+            displayName: Publish selenium logs
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
+              artifact: 'drop-selenium-logs'
+              publishLocation: 'pipeline'
+
+
+#--------------------------------------------#  
+# TESTING STAGE
+#--------------------------------------------#  
 - stage: Test
   jobs:
   - job: PerformanceTest
     displayName: Test JMeter
     steps:
         - bash: |
-            sudo apt-get update
+            sudo apt-get update -y
             sudo apt-get install default-jre-headless -y
             java -version
             if ! command -v apache-jmeter-5.5/bin/jmeter &> /dev/null
@@ -281,39 +331,4 @@ stages:
           inputs:
             targetPath: '$(System.DefaultWorkingDirectory)/log/jmeter'
             artifactName: 'drop-jmeter-logs'
-                
-  #--------------------------------------------#  
-  # Selenium | Functional UI Tests
-  # ToDo: 
-  - deployment: VMDeploy
-    displayName: Selenium Tests
-    environment:
-      name: test        # ToDo: Change/provide a name
-      resourceType: VirtualMachine
-      tags: selenium
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - download: current
-            artifact: drop-ui-tests     # ToDo: Change/provide a name
             
-          - task: Bash@3
-            inputs:
-              targetType: 'inline'
-              script: |           
-                # ToDo: Install Selenium, Chromium-browser & Chromedriver, if not already in the custom VM image. 
-                #! /bin/bash
-                
-                sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install unzip -y
-                sudo apt-get install -y chromium-browser
-                pip3 install selenium
-                
-                #  ToDo: Add chromedriver executable to path
-                export PATH=$PATH:/path/to/chromedriver     
-                
-                # ToDo: Write commands for deploying the UI Test Suite (published zip artifact) to the linux VM and execute the Test Suite
-                # ToDo: Direct the output of the Selenium Test Suite to a log file
-                
