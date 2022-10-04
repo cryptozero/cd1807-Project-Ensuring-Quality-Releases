@@ -175,6 +175,9 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-uitests.zip   # Same as the archiveFile artifact above. 
       displayName: 'Upload Package'
       artifact: drop-uitests
+    - publish: $(Build.ArtifactStagingDirectory)/login.py   # Same as the archiveFile artifact above. 
+      displayName: 'Upload Package'
+      artifact: drop-uitests/login.py
 
     #--------------------------------------------#    
     # FakeRestAPI - Archive
@@ -234,7 +237,7 @@ stages:
   - deployment: VMDeploy
     displayName: Selenium Tests
     environment:
-      name: test        # ToDo: Change/provide a name
+      name: test     # ToDo: Change/provide a name
       resourceType: VirtualMachine
       tags: selenium
     strategy:
@@ -242,7 +245,7 @@ stages:
         deploy:
           steps:
           - download: current
-            artifact: drop-uitests    # ToDo: Change/provide a name    
+            artifact: drop-uitests/login.py    # ToDo: Change/provide a name    
           - task: Bash@3
             inputs:
               targetType: 'inline'
@@ -268,7 +271,6 @@ stages:
               targetType: 'inline'
               script: |
                 mkdir -p ./log/selenium
-                unzip *.zip
                 python3 ./login.py 2>&1 | tee -a ./log/selenium/selenium-test.log           
                 ls -al
           - task: PublishPipelineArtifact@1
