@@ -230,15 +230,6 @@ stages:
               appType: webAppLinux
               deploymentMethod: zipDeploy
               package:  $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact. 
-          #--------------------------------------------#    
-          # Run JMeter test suite against the App Service
-          # ToDo: Update the script below to install jmeter, unzip the jmeter test suite published zip artifact, and run the PerformanceTestSuite.  
-          # ToDo: Generate the log file. 
-          - task: CmdLine@2
-            inputs:
-              script: |
-                                                                            # ToDo: Write your commands
-              workingDirectory: $(Pipeline.Workspace)/drop-jmeter/$(Build.BuildId)-jmeter.zip         # ToDo: Use the artifact name from the task above
 
 - stage: Test
   jobs:
