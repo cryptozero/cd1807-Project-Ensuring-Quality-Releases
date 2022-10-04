@@ -241,7 +241,7 @@ stages:
             java -version
             if ! command -v apache-jmeter-5.5/bin/jmeter &> /dev/null
             then
-              wget -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz
+              curl -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz
               tar xzvf apache-jmeter-5.5.tgz
             fi
             mkdir -p log/jmeter
