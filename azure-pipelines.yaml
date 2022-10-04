@@ -237,6 +237,7 @@ stages:
     displayName: Test JMeter
     steps:
         - bash: |
+            sudo apt-get update
             sudo apt-get install default-jre-headless -y
             java -version
             if ! command -v apache-jmeter-5.5/bin/jmeter &> /dev/null
