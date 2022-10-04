@@ -248,8 +248,11 @@ stages:
         - bash: |
             sudo apt-get install default-jre-headless -y
             java -version
-            wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz -O jmeter.tgz
-            tar xzvf jmeter.tgz
+            if ! command -v apache-jmeter-5.5/bin/jmeter &> /dev/null
+            then
+              wget -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz
+              tar xzvf apache-jmeter-5.5.tgz
+            fi
             mkdir -p log/jmeter
 
           displayName: Install JMeter
