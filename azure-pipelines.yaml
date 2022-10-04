@@ -245,7 +245,7 @@ stages:
         deploy:
           steps:
           - download: current
-            artifact: drop-uitests/login.py    # ToDo: Change/provide a name    
+            artifact: drop-uitests    # ToDo: Change/provide a name    
           - task: Bash@3
             inputs:
               targetType: 'inline'
@@ -270,6 +270,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
+                cp drop-uitests/login.py ./
                 mkdir -p ./log/selenium
                 python3 ./login.py 2>&1 | tee -a ./log/selenium/selenium-test.log           
                 ls -al
