@@ -242,7 +242,7 @@ stages:
         deploy:
           steps:
           - download: current
-            artifact: drop-ui-tests     # ToDo: Change/provide a name    
+            artifact: drop-uitests     # ToDo: Change/provide a name    
           - task: Bash@3
             inputs:
               targetType: 'inline'
@@ -331,4 +331,4 @@ stages:
           inputs:
             targetPath: '$(System.DefaultWorkingDirectory)/log/jmeter'
             artifactName: 'drop-jmeter-logs'
-            
+
