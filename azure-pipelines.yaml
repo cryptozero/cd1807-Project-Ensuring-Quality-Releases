@@ -267,8 +267,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                unzip drop-uitests/$(Build.BuildId)-uitests.zip
-                cp drop-uitests/login.py ./
+                unzip $(Pipeline.Workspace)/drop-uitests/$(Build.BuildId)-uitests.zip -d ./
                 mkdir -p ./log/selenium
                 python3 ./login.py 2>&1 | tee -a ./log/selenium/selenium-test.log           
                 ls -al
