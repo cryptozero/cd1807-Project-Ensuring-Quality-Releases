@@ -249,7 +249,7 @@ stages:
               script: |           
                 # ToDo: Install Selenium, Chromium-browser & Chromedriver, if not already in the custom VM image. 
                 #!/bin/bash
-                
+                sudo apt-get update -y
                 sudo apt-get upgrade -y
                 sudo apt-get install python3-pip -y
                 sudo apt-get install unzip -y
